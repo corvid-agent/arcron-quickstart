@@ -1,7 +1,7 @@
 """The smallest contract Arcron can drive.
 
 Zero-arg hook, keeper-app authorization via Application(...).address
-(never itob), no-op returns rather than fails. The keeper app id is
+no-op returns rather than fails. The keeper app id is
 set once through set_keeper — it is not a create argument, and it is
 not hardcoded here.
 
