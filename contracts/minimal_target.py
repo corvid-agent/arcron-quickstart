@@ -25,7 +25,7 @@ class MinimalTarget(ARC4Contract):
 
     def __init__(self) -> None:
         # Named later via set_keeper. Do not pass the keeper id at create
-        # and do not treat every uint64 as 769891898.
+        # and do not stuff that id into every uint64 argument.
         self.keeper_app = GlobalState(UInt64(0))
         self.work_done = GlobalState(UInt64(0))
         self.last_run_round = GlobalState(UInt64(0))
@@ -51,7 +51,7 @@ class MinimalTarget(ARC4Contract):
         Returns what it did, which is often nothing — and nothing is fine.
         """
         # Arcron's inner call comes from the keeper application's account.
-        # Application(id).address is the check. Never itob.
+        # Application(id).address is the check. Do not encode the id as bytes.
         assert (
             Txn.sender == Application(self.keeper_app.value).address
         ), "Only the keeper app may run this"
