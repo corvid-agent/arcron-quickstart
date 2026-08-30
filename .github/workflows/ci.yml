@@ -19,4 +19,4 @@ jobs:
           python -m pytest tests/ -q
       - name: Compile the target
         run: |
-          python -m puyapy contracts/minimal_target.py --out-dir artifacts
+          python -m puyapy contracts/minimal_target.py

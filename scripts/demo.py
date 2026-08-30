@@ -66,22 +66,23 @@ def _client() -> tuple[AlgodClient, str, AccountTransactionSigner]:
 
 
 def _compile_target() -> tuple[bytes, bytes]:
-    artifacts = ROOT / "artifacts"
-    artifacts.mkdir(exist_ok=True)
     cmd = [
         sys.executable,
         "-m",
         "puyapy",
         str(ROOT / "contracts" / "minimal_target.py"),
-        "--out-dir",
-        str(artifacts),
     ]
     print("compile:", " ".join(cmd))
     subprocess.check_call(cmd, cwd=ROOT)
-    approval = next(artifacts.rglob("*approval.teal"), None)
-    clear = next(artifacts.rglob("*clear.teal"), None)
+    teal = [
+        p
+        for p in (ROOT / "contracts").rglob("*.teal")
+        if ".venv" not in p.parts
+    ]
+    approval = next((p for p in teal if p.name.endswith("approval.teal")), None)
+    clear = next((p for p in teal if p.name.endswith("clear.teal")), None)
     if approval is None or clear is None:
-        sys.exit(f"puyapy did not emit approval/clear teal under {artifacts}")
+        sys.exit("puyapy did not emit approval/clear teal under contracts/")
     return approval.read_bytes(), clear.read_bytes()
 
 
