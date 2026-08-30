@@ -1,0 +1,19 @@
+[project]
+name = "arcron-quickstart"
+version = "0.0.0"
+description = "Ten-minute first-party Arcron TestNet demo"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.12"
+authors = [{ name = "CorvidLabs" }]
+dependencies = [
+  "py-algorand-sdk>=2.8.0",
+  "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+compile = ["algorand-python>=2.0.0"]
+dev = ["pytest>=8.0.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

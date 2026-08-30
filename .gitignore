@@ -1,0 +1,14 @@
+# Secrets — required from commit 1. Never commit a mnemonic.
+.env*
+!.env.example
+
+# Local
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.algokit/
+artifacts/
