@@ -23,12 +23,12 @@ TestNet only. You need a throwaway account with about 0.2 TestNet ALGO (AlgoKit 
 2. `python3.12 -m venv .venv && source .venv/bin/activate`
 3. `pip install -r requirements.txt -r requirements-dev.txt`
 4. Compile the target: `python -m puyapy contracts/minimal_target.py --out-dir artifacts`
-5. `python scripts/demo.py` deploys the app, calls `set_keeper(769891898)`, `request_work()`, and registers `run()uint64` on keeper 769891898 with `SKIP_AHEAD`.
+5. `python scripts/demo.py` deploys the app, calls `set_keeper` with the keeper application `769891898`, `request_work()`, and registers `run()uint64` on keeper 769891898 with `SKIP_AHEAD`.
 6. `python scripts/observe.py` waits until an execute shows up on the indexer and prints the txid and round.
 
 Default cadence is 30 rounds (about a minute and a half) so a keeper can hit it inside the ten minutes. The console walkthrough uses 215 rounds; that is fine too, it just may not finish inside the timed path. Interval floor is 10 rounds. Policy is `SKIP_AHEAD` (1), not `CATCH_UP` (0).
 
-The hook is zero-arg `run()uint64`. Authorization is `Txn.sender == Application(keeper).address`. The keeper id is passed once to `set_keeper`; it is not a create argument and it is not hardcoded in the contract.
+The hook is zero-arg `run()uint64`. Authorization is `Txn.sender == Application(keeper).address`. `set_keeper` takes an `Application`, not a uint64, so the call site cannot confuse interval with keeper id. It is not a create argument and it is not hardcoded in the contract.
 
 ## Measured cost
 

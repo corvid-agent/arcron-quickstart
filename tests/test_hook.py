@@ -21,7 +21,8 @@ def test_keeper_id_is_not_hardcoded_in_the_contract() -> None:
 
 def test_create_does_not_take_the_keeper() -> None:
     assert "def __init__(self) -> None:" in SRC
-    assert "def set_keeper(self, keeper_app: UInt64) -> None:" in SRC
+    assert "def set_keeper(self, keeper: Application) -> None:" in SRC
+    assert "def set_keeper(self, keeper_app: UInt64)" not in SRC
 
 
 def test_noop_returns_rather_than_asserting() -> None:

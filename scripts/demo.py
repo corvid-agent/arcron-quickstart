@@ -228,7 +228,7 @@ def main() -> None:
     client, sender, signer = _client()
     print(f"sender {sender}")
     app_id = deploy(client, sender, signer)
-    _call(client, sender, signer, app_id, Method.from_signature("set_keeper(uint64)void"), [KEEPER_APP_ID])
+    _call(client, sender, signer, app_id, Method.from_signature("set_keeper(application)void"), [KEEPER_APP_ID])
     _call(client, sender, signer, app_id, Method.from_signature("request_work()uint64"), [])
     upkeep_id = register(client, sender, signer, app_id)
     elapsed = time.time() - started

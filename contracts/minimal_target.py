@@ -32,11 +32,16 @@ class MinimalTarget(ARC4Contract):
         self.pending = GlobalState(UInt64(0))
 
     @abimethod()
-    def set_keeper(self, keeper_app: UInt64) -> None:
-        """Name the keeper app whose calls this contract will accept."""
+    def set_keeper(self, keeper: Application) -> None:
+        """Name the keeper whose app account may call run.
+
+        Creator only, once. Pass the keeper application, not a raw uint64
+        cadence. Store .id. run() authorizes Application(keeper).address.
+        """
         assert Txn.sender == Global.creator_address, "Only the creator can set the keeper"
         assert self.keeper_app.value == 0, "Keeper already set"
-        self.keeper_app.value = keeper_app
+        assert keeper.id != 0, "Keeper app required"
+        self.keeper_app.value = keeper.id
 
     @abimethod()
     def request_work(self) -> UInt64:

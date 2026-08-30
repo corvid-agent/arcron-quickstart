@@ -37,7 +37,7 @@
     <li>Copy <code>.env.example</code> to <code>.env</code> and set <code>DEPLOYER_MNEMONIC</code>. <code>.env*</code> is gitignored from commit 1.</li>
     <li><code>pip install -r requirements.txt -r requirements-dev.txt</code></li>
     <li><code>python -m puyapy contracts/minimal_target.py --out-dir artifacts</code></li>
-    <li><code>python scripts/demo.py</code> — deploy, <code>set_keeper(769891898)</code>, <code>request_work()</code>, register <code>run()uint64</code> with SKIP_AHEAD.</li>
+    <li><code>python scripts/demo.py</code> — deploy, <code>set_keeper</code> with keeper application 769891898, <code>request_work()</code>, register <code>run()uint64</code> with SKIP_AHEAD.</li>
     <li><code>python scripts/observe.py</code> — wait for an execute, print txid and round.</li>
   </ol>
 

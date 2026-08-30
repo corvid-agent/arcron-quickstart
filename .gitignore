@@ -12,3 +12,8 @@ __pycache__/
 .ruff_cache/
 .algokit/
 artifacts/
+
+# puyapy output (compile in CI / locally, do not commit)
+*.teal
+*.puya.map
+*.arc56.json
