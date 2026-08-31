@@ -1,63 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>arcron-quickstart — TestNet only</title>
-  <style>
-    body { font-family: ui-sans-serif, system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.45; color: #111; }
-    h1, h2 { font-weight: 600; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; text-align: left; vertical-align: top; }
-    code { font-family: ui-monospace, monospace; font-size: 0.9em; }
-    .not-done { background: #fff3bf; }
-    a { color: #0b57d0; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QUICKSTART — NOT DEPLOYED</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <h1>arcron-quickstart</h1>
-  <p>A ten-minute first-party Arcron TestNet demo: one tiny target, one registration on keeper <a href="https://testnet.explorer.perawallet.app/application/769891898">769891898</a>, one observed execute.</p>
+  <main class="crt" id="crt">
+    <header>
+      <h1>Quickstart</h1>
+      <div class="meta">TestNet · unaudited · ten-minute path</div>
+    </header>
 
-  <h2>Live proof</h2>
-  <p class="not-done"><strong>Not done.</strong> This page ships the path. It has not been run against TestNet, so there is no app id, no upkeep id, and no execute txid. No invented identifiers.</p>
-  <table>
-    <thead><tr><th>Item</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr><td>Tiny target contract</td><td>Source is in the repo. Live TestNet app id: <strong>not done</strong>.</td></tr>
-      <tr><td>Registration on keeper 769891898</td><td><strong>Not done.</strong> No upkeep id.</td></tr>
-      <tr><td>Observed execute</td><td><strong>Not done.</strong> No txid, no round.</td></tr>
-      <tr><td>Elapsed time</td><td><strong>Not timed.</strong> The clock starts when the TestNet steps actually run.</td></tr>
-    </tbody>
-  </table>
-  <p>Source and steps: <a href="https://github.com/corvid-agent/arcron-quickstart">github.com/corvid-agent/arcron-quickstart</a>.</p>
+    <section class="status-row">
+      <div class="label">Board</div>
+      <div class="destination grounded" id="headline">NOT DEPLOYED</div>
+      <div class="meta" id="subhead">not deployed · keeper 769891898</div>
+    </section>
 
-  <h2>How to run (under ten minutes)</h2>
-  <ol>
-    <li>Throwaway TestNet account, about 0.2 TestNet ALGO from the dispenser. Not MainNet. Not a real mnemonic.</li>
-    <li>Copy <code>.env.example</code> to <code>.env</code> and set <code>DEPLOYER_MNEMONIC</code>. <code>.env*</code> is gitignored from commit 1.</li>
-    <li><code>pip install -r requirements.txt -r requirements-dev.txt</code></li>
-    <li><code>python -m puyapy contracts/minimal_target.py --out-dir artifacts</code></li>
-    <li><code>python scripts/demo.py</code> — deploy, <code>set_keeper</code> with keeper application 769891898, <code>request_work()</code>, register <code>run()uint64</code> with SKIP_AHEAD.</li>
-    <li><code>python scripts/observe.py</code> — wait for an execute, print txid and round.</li>
-  </ol>
+    <section class="board">
+      <div class="cell">
+        <div class="label">App</div>
+        <div class="flaps" id="app" aria-label="target app id"></div>
+      </div>
+      <div class="cell">
+        <div class="label">Upkeep</div>
+        <div class="flaps" id="upkeep" aria-label="upkeep id"></div>
+      </div>
+      <div class="cell">
+        <div class="label">Keeper</div>
+        <div class="flaps" id="keeper" aria-label="keeper app id"></div>
+      </div>
+      <div class="cell">
+        <div class="label">Execute</div>
+        <div class="flaps" id="execute" aria-label="execute seen"></div>
+      </div>
+    </section>
 
-  <h2>Measured cost</h2>
-  <p>Not measured. We have not signed a register group. Arcron docs <em>claim</em> roughly 0.1–0.2 TestNet ALGO up front for a similar first upkeep, mostly refundable (box MBR 0.0621, escrow, three 0.001 fees). Recompute; those pages have gotten the arithmetic wrong before.</p>
-
-  <h2>What does not work yet</h2>
-  <ul>
-    <li>Live proof is empty.</li>
-    <li>The demo script has not been executed against live algod.</li>
-    <li>We have not confirmed a keeper will pick up a new registration inside ten minutes.</li>
-  </ul>
-
-  <h2>Honesty</h2>
-  <ul>
-    <li><strong>Unaudited.</strong> Keeper 769891898 is alpha, TestNet only, and <code>frozen=0</code> (upgradeable).</li>
-    <li><strong>No MainNet.</strong></li>
-    <li><strong>First-party.</strong> A CorvidLabs demo of our own keeper. Shipping this page does not count as outside adoption.</li>
-    <li>Every keeper running is still ours. Permissionless is true architecturally and currently false empirically.</li>
-    <li>Throwaway dispenser account only. Mnemonics never go in git.</li>
-  </ul>
+    <p class="notes" id="notes">
+      A ten-minute first-party Arcron TestNet demo. Live proof is empty:
+      no app id, no upkeep id, no execute txid. Flip
+      <code>docs/deploy.json</code> after create. Do not invent identifiers.
+      Source and steps:
+      <a href="https://github.com/corvid-agent/arcron-quickstart">github.com/corvid-agent/arcron-quickstart</a>.
+      Keeper
+      <a href="https://testnet.explorer.perawallet.app/application/769891898">769891898</a>.
+    </p>
+    <p class="err" id="err" hidden></p>
+  </main>
+  <script src="./app.js"></script>
 </body>
 </html>
