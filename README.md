@@ -42,6 +42,20 @@ Hook auth is `Txn.sender == Application(keeper).address`. Then `request_work()`,
 
 After a real create, write the app id into `docs/deploy.json` (`appId`, still `"network": "testnet"`). The CRT stays **NOT DEPLOYED** while `appId` is 0.
 
+## LocalNet recreate (not TestNet)
+
+Create, `set_keeper(Application(...))`, and a mock-keeper inner-call of `run()` were proven on AlgoKit LocalNet (`dockernet-v1`). That is **not** TestNet. Do **not** copy any LocalNet app id into `docs/deploy.json` or Pages. `appId` stays 0 until a real TestNet create.
+
+```bash
+algokit localnet start
+# algod http://localhost:4001
+# create with ZERO constructor args — do not pass 769891898
+# set_keeper(Application(<local keeper>))  # Application, never itob(keeper id)
+# inner-call run() from the keeper app account
+```
+
+LocalNet ids are ephemeral (DevMode / reset). They are not a product and they are not for GitHub Pages.
+
 ## Measured cost
 
 Not measured. We have not signed a register group.
