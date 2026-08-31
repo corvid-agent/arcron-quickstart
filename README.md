@@ -4,31 +4,43 @@ A ten-minute first-party Arcron TestNet demo: one tiny target, one registration 
 
 ## Live proof
 
-**Not done.** This repository ships the path. It has not been run against TestNet, so there is no app id, no upkeep id, and no execute txid. Do not invent one. The table is the verification bar; three of four items are not done, and the clock was not started.
+**Not done.** CRT board: <https://corvid-agent.github.io/arcron-quickstart/> — headline **NOT DEPLOYED**, `docs/deploy.json` has `"appId": 0` and empty `executeTxid`. Do not invent one.
 
 | Item | Status |
 | --- | --- |
-| Tiny target contract | Source: [`contracts/minimal_target.py`](contracts/minimal_target.py). Live TestNet app id: **not done**. |
+| Tiny target contract | Source: [`contracts/minimal_target.py`](contracts/minimal_target.py). Live TestNet app id: **not done** (`appId` 0). |
 | Registration on keeper [769891898](https://testnet.explorer.perawallet.app/application/769891898) | **Not done.** No upkeep id. |
 | Observed execute | **Not done.** No txid, no round. |
 | Elapsed time | **Not timed.** The clock starts when the TestNet steps actually run. |
 
-The keeper itself is live on TestNet: app [`769891898`](https://testnet.explorer.perawallet.app/application/769891898) (unaudited, `frozen=0`). This demo has not yet registered anything on it.
+The keeper itself is live on TestNet: app [`769891898`](https://testnet.explorer.perawallet.app/application/769891898) (unaudited, `frozen=0`). This demo has not registered anything on it.
 
 ## How to run (under ten minutes)
 
-TestNet only. You need a throwaway account with about 0.2 TestNet ALGO (AlgoKit dispenser, not MainNet, not a real mnemonic).
+TestNet only. Throwaway dispenser account, about 0.2 TestNet ALGO. No MainNet. No mnemonic in git (`.env*` is gitignored from commit 1).
 
-1. Copy `.env.example` to `.env` and set `DEPLOYER_MNEMONIC`. `.env*` is gitignored from commit 1. Do not commit it.
-2. `python3.12 -m venv .venv && source .venv/bin/activate`
-3. `pip install -r requirements.txt -r requirements-dev.txt`
-4. Compile the target: `python -m puyapy contracts/minimal_target.py --out-dir artifacts`
-5. `python scripts/demo.py` deploys the app, calls `set_keeper` with the keeper application `769891898`, `request_work()`, and registers `run()uint64` on keeper 769891898 with `SKIP_AHEAD`.
-6. `python scripts/observe.py` waits until an execute shows up on the indexer and prints the txid and round.
+```bash
+python3.12 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
 
-Default cadence is 30 rounds (about a minute and a half) so a keeper can hit it inside the ten minutes. The console walkthrough uses 215 rounds; that is fine too, it just may not finish inside the timed path. Interval floor is 10 rounds. Policy is `SKIP_AHEAD` (1), not `CATCH_UP` (0).
+# Same compile CI runs. puyapy writes teal next to the source
+# (contracts/MinimalTarget.approval.teal). Do not pass --out-dir.
+python -m puyapy contracts/minimal_target.py
+```
 
-The hook is zero-arg `run()uint64`. Authorization is `Txn.sender == Application(keeper).address`. `set_keeper` takes an `Application`, not a uint64, so the call site cannot confuse interval with keeper id. It is not a create argument and it is not hardcoded in the contract.
+Create with **zero args**. Do not pass `769891898`, an interval, or anything else at create. Mapping every uint64 create-arg onto the keeper id is how a cadence gets frozen; this `__init__` takes nothing so that cannot happen here.
+
+Then, still as creator, name the keeper as an **application**, not a uint64 and not `itob`:
+
+```text
+set_keeper(Application(769891898))
+```
+
+Hook auth is `Txn.sender == Application(keeper).address`. Then `request_work()`, then register `run()uint64` on keeper 769891898 with `SKIP_AHEAD` (1), interval 30 rounds, fee 0.010 ALGO, funding 0.03 ALGO. Interval floor is 10 rounds. Do not pass `CATCH_UP` (0) by accident.
+
+`python scripts/demo.py` is that sequence (compile, create with empty `app_args`, `set_keeper(application)`, `request_work`, register). It has **not** been run against live algod. `python scripts/observe.py` waits for an execute and prints the txid and round. If none arrives, that is not done — do not invent a txid.
+
+After a real create, write the app id into `docs/deploy.json` (`appId`, still `"network": "testnet"`). The CRT stays **NOT DEPLOYED** while `appId` is 0.
 
 ## Measured cost
 
@@ -46,11 +58,10 @@ This demo uses fee 0.010 and funding 0.03 unless you change the constants in `sc
 
 ## What does not work yet
 
-- Live proof is empty: no TestNet deploy, no registration, no observed execute, no timer.
+- Live proof is empty: no TestNet deploy, no registration, no observed execute, no timer. CRT `appId` is 0.
 - `scripts/demo.py` has not been executed against live algod. Treat it as the intended path, not a measured one.
+- TestNet dispenser requires a Google login, which blocked a live create from this environment.
 - We have not confirmed that a CorvidLabs keeper will pick up a brand-new registration inside ten minutes.
-- GitHub Pages is the same honest not-done table. It 404s until the Pages workflow has run once.
-- Compiling needs `puyapy` (`algorand-python`). If the compile CLI flag in CI is wrong, that job is the bug report.
 
 ## Honesty
 

@@ -124,6 +124,8 @@ def deploy(client: AlgodClient, sender: str, signer: AccountTransactionSigner) -
     params = _sp(client)
     params.flat_fee = True
     params.fee = 1_000
+    # Create with zero args. Do not pass the keeper id, an interval, or
+    # anything else here. set_keeper(Application) is a later call.
     txn = transaction.ApplicationCreateTxn(
         sender=sender,
         sp=params,
@@ -133,6 +135,7 @@ def deploy(client: AlgodClient, sender: str, signer: AccountTransactionSigner) -
         global_schema=transaction.StateSchema(num_uints=4, num_byte_slices=0),
         local_schema=transaction.StateSchema(num_uints=0, num_byte_slices=0),
         extra_pages=extra,
+        app_args=[],
     )
     atc = AtomicTransactionComposer()
     atc.add_transaction(TransactionWithSigner(txn, signer))
