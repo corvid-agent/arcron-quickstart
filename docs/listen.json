@@ -1,0 +1,51 @@
+{
+  "network": "localnet",
+  "genesisId": "dockernet-v1",
+  "algod": "http://localhost:4001",
+  "appId": 1092,
+  "appAddress": "4BPCZFGOIVP32GRLLPEYLK2PL7SYE2TSG6NP4CHLEEXOFMKMQ7BTUMZDPM",
+  "mockKeeperAppId": 1093,
+  "mockKeeperCreateTxid": "2K2BOMJGXAN3ZPBIDVTS2GRQ5SYPHI3RTVNEZBCZTK3GER7ZODAQ",
+  "mockKeeperConfirmedRound": 74,
+  "mockKeeperFundTxid": "EJFCZQ4XMDRJFHXKTAXR57KJBL3REBAVNUUDYLGUAJTWY5DLN5FA",
+  "mockKeeperFundRound": 75,
+  "creator": "MW2E3D7YKXBAEWADXBYWRAADGLHQ77CMGHQYAX67JEAPSQ24FVWMFU26GY",
+  "lastRound": 78,
+  "listened_at": "2026-09-01T20:09:38.152798+00:00",
+  "calls": [
+    {
+      "method": "set_keeper",
+      "txid": "PDD5Y5RX3YCU6P4VABERDSSIOOOPW37OWGIEASLWHR3A5JJOZP7A",
+      "round": 76,
+      "success": true,
+      "innerCount": 0,
+      "keeperAppId": 1093
+    },
+    {
+      "method": "request_work",
+      "txid": "63IGYSSYPUZJVC4X2IBT2PNW7QHZPBXV3V7N6OX27S7K46QPKDLQ",
+      "round": 77,
+      "success": true,
+      "innerCount": 0,
+      "hook": "request_work",
+      "via": "creator"
+    },
+    {
+      "method": "run",
+      "txid": "6R54TP4RJPVZ2O5QCQIR5V4BT5MPZO2OTLHKOX62UIEZUGN6Z3YQ",
+      "round": 78,
+      "success": true,
+      "innerCount": 1,
+      "targetAppId": 1092,
+      "hook": "run",
+      "via": "mock_keeper.run"
+    }
+  ],
+  "global": {
+    "keeper_app": 1093,
+    "work_done": 1,
+    "last_run_round": 78,
+    "pending": 0
+  },
+  "notes": "LocalNet-only listen proof. Do NOT copy this appId into docs/deploy.json or treat it as TestNet. TestNet stays appId 0 until a real TestNet create. Did not spend TestNet bank. Did not poke upkeep 81 or 87. set_keeper + request_work + mock_keeper.run() inner-call of run()uint64."
+}

@@ -42,12 +42,12 @@ Hook auth is `Txn.sender == Application(keeper).address`. Then `request_work()`,
 
 After a real create, write the app id into `docs/deploy.json` (`appId`, still `"network": "testnet"`). The CRT stays **NOT DEPLOYED** while `appId` is 0.
 
-## LocalNet recreate (not TestNet)
+## LocalNet recreate + listen (not TestNet)
 
-Create, `set_keeper(Application(...))`, and a mock-keeper inner-call of `run()` were proven on AlgoKit LocalNet (`dockernet-v1`). That is **not** TestNet. Do **not** copy any LocalNet app id into `docs/deploy.json` or Pages. `appId` stays 0 until a real TestNet create.
+Create, `set_keeper`, `request_work`, and a mock-keeper inner-call of `run()` are proven on AlgoKit LocalNet (`dockernet-v1`). That is **not** TestNet. Do **not** copy any LocalNet app id into `docs/deploy.json` or Pages. `appId` stays 0 until a real TestNet create.
 
 LocalNet ids are ephemeral (DevMode / reset). They are not a product and they are not for GitHub Pages.
-LocalNet proof for Pages lives in `docs/localnet.json` (CRT shows it when present). `docs/deploy.json` stays honest TestNet `appId: 0`.
+LocalNet proof for Pages lives in `docs/localnet.json` and `docs/listen.json` (CRT shows them when present). `docs/deploy.json` stays honest TestNet `appId: 0`.
 
 ```bash
 # Docker daemon required
@@ -57,14 +57,19 @@ algokit localnet start
 pip install puyapy py-algorand-sdk
 python scripts/localnet_recreate.py
 # writes docs/localnet.json with network:"localnet" and the new appId
+
+python scripts/localnet_listen.py
+# set_keeper + request_work + mock_keeper.run(); writes docs/listen.json
 ```
 
-The script talks only to `localhost:4001` / `4002`, signs with the LocalNet KMD
-`unencrypted-default-wallet` (never prints a mnemonic), refuses TestNet/MainNet
-genesis ids, and never modifies `docs/deploy.json`.
+The scripts talk only to `localhost:4001` / `4002`, sign with the LocalNet KMD
+`unencrypted-default-wallet` (never print a mnemonic), refuse TestNet/MainNet
+genesis ids, skip the TestNet bank address, and never modify `docs/deploy.json`.
 
 DevMode holds last-round at 0 until the first tx. A successful create is a confirmed
 `application-index` on genesis id `dockernet-v1`, not a TestNet explorer link.
+`listen.json` records the mock keeper app id, call txids, and global state
+(`keeper_app`, `work_done`, `last_run_round`, `pending`) after the inner-call.
 
 
 ## Measured cost

@@ -17,3 +17,4 @@ artifacts/
 *.teal
 *.puya.map
 *.arc56.json
+smart_contracts/artifacts/
