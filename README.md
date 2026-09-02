@@ -49,6 +49,17 @@ Create, `set_keeper`, `request_work`, and a mock-keeper inner-call of `run()` ar
 LocalNet ids are ephemeral (DevMode / reset). They are not a product and they are not for GitHub Pages.
 LocalNet proof for Pages lives in `docs/localnet.json` and `docs/listen.json` (CRT shows them when present). `docs/deploy.json` stays honest TestNet `appId: 0`.
 
+**LocalNet proof (ephemeral, LocalNet-only — not TestNet):**
+
+| Item | Value | Label |
+| --- | --- | --- |
+| Network / genesis | `localnet` / `dockernet-v1` | LocalNet only |
+| MinimalTarget app id | `1092` | LocalNet-only; do not copy to `deploy.json` |
+| Mock keeper app id | `1093` | LocalNet-only |
+| Calls proven | `set_keeper` → `request_work` → mock `run()` (1 inner) | see `docs/listen.json` |
+| Global after listen | `work_done=1`, `pending=0`, `last_run_round=78` | LocalNet snapshot |
+| TestNet Pages `appId` | still `0` | unchanged |
+
 ```bash
 # Docker daemon required
 algokit localnet start
