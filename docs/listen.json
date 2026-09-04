@@ -2,29 +2,29 @@
   "network": "localnet",
   "genesisId": "dockernet-v1",
   "algod": "http://localhost:4001",
-  "appId": 1033,
-  "appAddress": "MRWI7SAIE55JQT3UDYKV2G7DVAS32BYTEGBZ265WPMSNJCDF5ONYS5FKGU",
-  "mockKeeperAppId": 1034,
-  "mockKeeperCreateTxid": "CR5GPZQWMCGYWOQ76NIJYVRPLYRW2FFTX2JXSG6JVXXX7MMSJJEQ",
-  "mockKeeperConfirmedRound": 27,
-  "mockKeeperFundTxid": "I4MYS4WTR2CB7FMBZRPJJ2VG67W4HTDLCKQ2J2VPC3MRNM5CG3NQ",
-  "mockKeeperFundRound": 28,
+  "appId": 1077,
+  "appAddress": "5U357E3JHKHFBLTMNWO7PBW3TIHG6GD65J7BBTAKYTYC4QCM6RSH3HU5JM",
+  "mockKeeperAppId": 1078,
+  "mockKeeperCreateTxid": "IHDM3U245PDKJDNARVY4H6MIPVUGVTQBOEB6KZZYXH25OCM57MYA",
+  "mockKeeperConfirmedRound": 61,
+  "mockKeeperFundTxid": "EKMPF6H2DNP3XCUVVKNTVNCNH5DY43OB77GUKMKN5YP7FIZPOXYA",
+  "mockKeeperFundRound": 62,
   "creator": "LB5SWMC4Z2BVA6N55MM6ZWFZONF5INTOTOV7V7O2SYEW26MNFLS4YM2HRE",
-  "lastRound": 31,
-  "listened_at": "2026-09-04T18:58:25.027126+00:00",
+  "lastRound": 65,
+  "listened_at": "2026-09-04T23:50:20.044060+00:00",
   "calls": [
     {
       "method": "set_keeper",
-      "txid": "BUPZH3MLEGH55AO4MTLV7XVR2SWFNPTYAO4J7Z73LPIKCZP335WA",
-      "round": 29,
+      "txid": "ROSW4CQGBNVZBU7LZMQURTYCJ6TOYS5RD77TJKNYYP4JDPVS65RA",
+      "round": 63,
       "success": true,
       "innerCount": 0,
-      "keeperAppId": 1034
+      "keeperAppId": 1078
     },
     {
       "method": "request_work",
-      "txid": "C2PMNVTD2BRBM7L3KNFBWIURAO74QKLY6CY3DN3BRRJSI7SGD3LA",
-      "round": 30,
+      "txid": "ANS76PVIIBQOVTCDRLGFIMJEL43WVSKYCEHFRGUVPGN6RMYMXZYA",
+      "round": 64,
       "success": true,
       "innerCount": 0,
       "hook": "request_work",
@@ -32,19 +32,19 @@
     },
     {
       "method": "run",
-      "txid": "NG35R2O4WTMV3UODM3MS5BAKGQDU4I6R6QM7KGMTFLLJF7X4JMOQ",
-      "round": 31,
+      "txid": "3OBJGKFQJIMIPJW52U5N5LOVPHBK4VLDR6CS37JR6F5WPBP55RCQ",
+      "round": 65,
       "success": true,
       "innerCount": 1,
-      "targetAppId": 1033,
+      "targetAppId": 1077,
       "hook": "run",
       "via": "mock_keeper.run"
     }
   ],
   "global": {
-    "keeper_app": 1034,
+    "keeper_app": 1078,
     "work_done": 1,
-    "last_run_round": 31,
+    "last_run_round": 65,
     "pending": 0
   },
   "notes": "LocalNet-only listen proof. Do NOT copy this appId into docs/deploy.json or treat it as TestNet. TestNet stays appId 0 until a real TestNet create. Did not spend TestNet bank. Did not poke upkeep 81 or 87. set_keeper + request_work + mock_keeper.run() inner-call of run()uint64."
