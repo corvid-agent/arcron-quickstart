@@ -54,10 +54,10 @@ LocalNet proof for Pages lives in `docs/localnet.json` and `docs/listen.json` (C
 | Item | Value | Label |
 | --- | --- | --- |
 | Network / genesis | `localnet` / `dockernet-v1` | LocalNet only |
-| MinimalTarget app id | `1116` | LocalNet-only; do not copy to `deploy.json` |
-| Mock keeper app id | `1117` | LocalNet-only |
+| MinimalTarget app id | `1155` | LocalNet-only; do not copy to `deploy.json` |
+| Mock keeper app id | `1156` | LocalNet-only |
 | Calls proven | `set_keeper` → `request_work` → mock `run()` (1 inner) | see `docs/listen.json` |
-| Global after listen | `work_done=1`, `pending=0`, `last_run_round=96` | LocalNet snapshot |
+| Global after listen | `work_done=1`, `pending=0`, `last_run_round=127` | LocalNet snapshot |
 | TestNet Pages `appId` | still `0` | unchanged |
 
 ```bash
