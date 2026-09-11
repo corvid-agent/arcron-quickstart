@@ -19,6 +19,11 @@ function paint(status, cls, title) {
   document.title = title;
 }
 
+function setNetworkMeta(text) {
+  const el = document.getElementById("network-meta");
+  if (el) el.textContent = text;
+}
+
 function b64utf8(b64) {
   try { return atob(b64); } catch { return ""; }
 }
@@ -207,6 +212,7 @@ async function main() {
   } catch (e) {
     document.getElementById("err").hidden = false;
     document.getElementById("err").textContent = "Could not read deploy.json";
+    setNetworkMeta("network unknown · do not assume TestNet · unaudited");
     return;
   }
 
@@ -220,12 +226,14 @@ async function main() {
 
   if (appId <= 0) {
     paint("NOT DEPLOYED", "grounded", "QUICKSTART — NOT DEPLOYED");
-    subhead.textContent = "not deployed · keeper " + keeper;
+    setNetworkMeta("LocalNet proof only · not on TestNet · unaudited · ten-minute path");
+    subhead.textContent = "not deployed · keeper " + keeper + " · LocalNet only";
     flaps(document.getElementById("execute"), "NONE", 4);
     await loadLocalnetProof();
     return;
   }
 
+  setNetworkMeta("TestNet · unaudited · ten-minute path");
   subhead.textContent = "app " + appId + " · upkeep " + (upkeepId || "—") + " · " + (cfg.network || "testnet");
   const txid = (cfg.executeTxid || "").trim();
   flaps(document.getElementById("execute"), txid ? "SEEN" : "NONE", 4);

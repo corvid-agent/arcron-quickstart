@@ -13,7 +13,7 @@
   <main class="crt" id="crt">
     <header>
       <h1>Quickstart</h1>
-      <div class="meta">TestNet · unaudited · ten-minute path</div>
+      <div class="meta" id="network-meta">LocalNet proof only · not on TestNet · unaudited · ten-minute path</div>
     </header>
 
     <section class="status-row">
@@ -43,10 +43,10 @@
 
     <p class="meta" id="localnet-proof" hidden></p>
     <p class="notes" id="notes">
-      A ten-minute first-party Arcron TestNet demo. Live proof is empty:
-      no app id, no upkeep id, no execute txid. Flip
-      <code>docs/deploy.json</code> after create. Do not invent identifiers.
-      Source and steps:
+      A ten-minute first-party Arcron demo. Live board is LocalNet-only until
+      <code>docs/deploy.json</code> <code>appId</code> is a real TestNet create
+      (currently 0 — not deployed). No app id, no upkeep id, no execute txid on
+      TestNet yet. Do not invent identifiers. Source and steps:
       <a href="https://github.com/corvid-agent/arcron-quickstart">github.com/corvid-agent/arcron-quickstart</a>.
       Keeper
       <a href="https://testnet.explorer.perawallet.app/application/769891898">769891898</a>.
