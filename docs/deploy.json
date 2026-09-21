@@ -5,5 +5,5 @@
   "keeperAppId": 769891898,
   "hook": "run()uint64",
   "executeTxid": "",
-  "notes": "not done — TestNet dispenser requires Google login; live create/register/execute not completed; do not invent txids"
+  "notes": "not done — TestNet dispenser requires Google login; live create/register/execute not completed; do not invent txids. 2026-09-21 unsigned algod read: keeper 769891898 still live on TestNet (frozen=0, next_upkeep_id=121); skipped upkeep 81/87; LocalNet recreate blocked (no dockerd); last LocalNet proof remains 2026-09-18 in docs/localnet.json + docs/listen.json — not TestNet."
 }

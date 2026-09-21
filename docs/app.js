@@ -174,9 +174,12 @@ async function loadLocalnetProof() {
     const ln = await res.json();
     if (!ln || ln.network !== "localnet" || !(Number(ln.appId) > 0)) return;
     el.hidden = false;
+    const created = (ln.created_at || "").trim();
+    const when = created ? created.slice(0, 10) : "undated";
     let line =
       "LocalNet proof · app " + ln.appId +
       " · " + (ln.genesisId || "dockernet") +
+      " · proof " + when +
       " · not TestNet (see docs/localnet.json)";
     try {
       const lr = await fetch("./listen.json", { cache: "no-store" });

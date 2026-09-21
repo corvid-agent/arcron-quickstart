@@ -64,10 +64,22 @@ def test_pages_does_not_paint_localnet_as_testnet() -> None:
     assert "./localnet.json" in APP_JS
     assert "./listen.json" in APP_JS
     assert "setNetworkMeta" in APP_JS
+    assert "ln.created_at" in APP_JS
+    assert '" · proof "' in APP_JS or " · proof " in APP_JS
     html = (ROOT / "docs" / "index.html").read_text()
     assert 'id="network-meta"' in html
     assert "LocalNet proof only" in html
     assert "not on TestNet" in html
+    assert "created_at" in html
+    assert "2026-09-18" in html
+
+
+def test_readme_stamps_last_recreate_and_dockerd_block() -> None:
+    assert "2026-09-18" in README
+    assert "2026-09-21" in README
+    assert "no dockerd" in README.lower() or "Container engine not found" in README
+    assert "unsigned" in README.lower()
+    assert int(DEPLOY.get("appId") or 0) == 0
 
 
 def test_listen_json_is_localnet_not_testnet() -> None:

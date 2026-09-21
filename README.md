@@ -59,6 +59,10 @@ LocalNet proof for Pages lives in `docs/localnet.json` and `docs/listen.json` (C
 | Calls proven | `set_keeper` → `request_work` → mock `run()` (1 inner) | see `docs/listen.json` |
 | Global after listen | `work_done=1`, `pending=0`, `last_run_round=124` | LocalNet snapshot |
 | TestNet Pages `appId` | still `0` | unchanged |
+| Proof `created_at` | `2026-09-18T16:11:16Z` | LocalNet snapshot; CRT shows the date |
+| Last CoS recreate attempt | 2026-09-21 — **blocked** (no dockerd / Container engine not found) | unsigned TestNet keeper read only |
+
+As of **2026-09-21** (America/Denver): LocalNet recreate+listen was not re-run because Docker/Podman is not on PATH on the CoS box (`algokit localnet status` → Container engine not found). The table above is the last successful LocalNet proof (2026-09-18). Do not treat it as fresh today. Unsigned TestNet algod read confirmed keeper `769891898` still exists (`frozen=0`, `next_upkeep_id=121`). Skipped upkeep 81 and 87. TestNet bank not spent. `docs/deploy.json` stays `appId: 0`.
 
 ```bash
 # Docker daemon required
