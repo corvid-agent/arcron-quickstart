@@ -60,9 +60,9 @@ LocalNet proof for Pages lives in `docs/localnet.json` and `docs/listen.json` (C
 | Global after listen | `work_done=1`, `pending=0`, `last_run_round=124` | LocalNet snapshot |
 | TestNet Pages `appId` | still `0` | unchanged |
 | Proof `created_at` | `2026-09-18T16:11:16Z` | LocalNet snapshot; CRT shows the date |
-| Last CoS recreate attempt | 2026-09-21 — **blocked** (no dockerd / Container engine not found) | unsigned TestNet keeper read only |
+| Last CoS recreate attempt | 2026-09-22 — **blocked** (no dockerd / Container engine not found) | unsigned TestNet keeper probe → `docs/due.json` |
 
-As of **2026-09-21** (America/Denver): LocalNet recreate+listen was not re-run because Docker/Podman is not on PATH on the CoS box (`algokit localnet status` → Container engine not found). The table above is the last successful LocalNet proof (2026-09-18). Do not treat it as fresh today. Unsigned TestNet algod read confirmed keeper `769891898` still exists (`frozen=0`, `next_upkeep_id=121`). Skipped upkeep 81 and 87. TestNet bank not spent. `docs/deploy.json` stays `appId: 0`.
+As of **2026-09-22** (America/Denver): LocalNet recreate+listen was not re-run because Docker/Podman is not on PATH on the CoS box (`algokit localnet status` → Container engine not found). The table above is the last successful LocalNet proof (2026-09-18). Do not treat it as fresh today. Unsigned TestNet probe (`python scripts/probe_keeper.py`) wrote `docs/due.json`: keeper `769891898` still live (`frozen=0`, `next_upkeep_id=121`, TestNet last-round recorded). Skipped upkeep 81 and 87. TestNet bank not spent. `docs/deploy.json` stays `appId: 0`. `due.json` `quickstartAppId`/`quickstartUpkeepId` stay 0 — never paint the keeper probe as a quickstart deploy.
 
 ```bash
 # Docker daemon required
@@ -86,6 +86,23 @@ DevMode holds last-round at 0 until the first tx. A successful create is a confi
 `listen.json` records the mock keeper app id, call txids, and global state
 (`keeper_app`, `work_done`, `last_run_round`, `pending`) after the inner-call.
 
+
+
+## Unsigned keeper probe (`docs/due.json`)
+
+When dockerd/LocalNet is down and TestNet quickstart is still `appId` 0, refresh an
+**unsigned** TestNet read of Arcron keeper [`769891898`](https://testnet.explorer.perawallet.app/application/769891898)
+into `docs/due.json` (algod status + app global state, indexer account balance):
+
+```bash
+python scripts/probe_keeper.py
+# writes docs/due.json only — never docs/deploy.json
+```
+
+This does **not** create a MinimalTarget, does **not** register an upkeep, and never
+copies LocalNet ids into `deploy.json`. Skip upkeep 81; do not poke 87. CRT Pages
+subhead shows `lastRound` / `next_upkeep` / thawed|frozen from `due.json` while the
+headline stays **NOT DEPLOYED**.
 
 ## Measured cost
 

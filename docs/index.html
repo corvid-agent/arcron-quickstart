@@ -48,12 +48,13 @@
       (currently 0 — not deployed). No app id, no upkeep id, no execute txid on
       TestNet yet. Do not invent identifiers. CRT LocalNet line shows the
       <code>created_at</code> date from <code>docs/localnet.json</code> so a stale
-      proof is obvious (last recreate 2026-09-18; Sep 21 demo loop had no dockerd).
-      Source and steps:
+      proof is obvious (last recreate 2026-09-18; Sep 21–22 demo loop had no dockerd).
+      <code>docs/due.json</code> is an unsigned TestNet keeper probe only
+      (<code>quickstartAppId</code> stays 0). Source and steps:
       <a href="https://github.com/corvid-agent/arcron-quickstart">github.com/corvid-agent/arcron-quickstart</a>.
       Keeper
       <a href="https://testnet.explorer.perawallet.app/application/769891898">769891898</a>
-      (unsigned read 2026-09-21: still live, <code>frozen=0</code>).
+      (unsigned probe 2026-09-22: still live, <code>frozen=0</code>, <code>next_upkeep_id=121</code>).
     </p>
     <p class="err" id="err" hidden></p>
   </main>

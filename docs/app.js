@@ -165,6 +165,23 @@ async function loadConfig() {
 }
 
 
+
+async function loadDueSnapshot() {
+  try {
+    const res = await fetch("./due.json", { cache: "no-store" });
+    if (!res.ok) return null;
+    const due = await res.json();
+    if (!due || due.network !== "testnet") return null;
+    // Honesty: due.json may describe the TestNet *keeper*, but never paints
+    // quickstart as deployed. quickstartAppId / quickstartUpkeepId must stay 0.
+    if (Number(due.quickstartAppId || 0) !== 0) return null;
+    if (Number(due.quickstartUpkeepId || 0) !== 0) return null;
+    return due;
+  } catch (_) {
+    return null;
+  }
+}
+
 async function loadLocalnetProof() {
   const el = document.getElementById("localnet-proof");
   if (!el) return;
@@ -229,8 +246,23 @@ async function main() {
 
   if (appId <= 0) {
     paint("NOT DEPLOYED", "grounded", "QUICKSTART — NOT DEPLOYED");
+    // Keep "not on TestNet" so the badge stays LocalNet-only even when due.json
+    // reports a live TestNet keeper round — quickstart itself is undeployed.
     setNetworkMeta("LocalNet proof only · not on TestNet · unaudited · ten-minute path");
-    subhead.textContent = "not deployed · keeper " + keeper + " · LocalNet only";
+    let sub = "not deployed · keeper " + keeper + " · LocalNet only";
+    const due = await loadDueSnapshot();
+    if (due) {
+      const lr = due.lastRound != null ? due.lastRound : "—";
+      const next = due.nextUpkeepId != null ? due.nextUpkeepId : "—";
+      const fr = Number(due.frozen) === 1 ? "frozen" : "thawed";
+      const when = (due.probedAt || "").slice(0, 10) || "undated";
+      sub =
+        "not deployed · keeper " + keeper +
+        " · TestNet r" + lr + " · next_upkeep " + next + " · " + fr +
+        " · probed " + when +
+        " · LocalNet only";
+    }
+    subhead.textContent = sub;
     flaps(document.getElementById("execute"), "NONE", 4);
     await loadLocalnetProof();
     return;

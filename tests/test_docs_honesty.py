@@ -63,22 +63,30 @@ def test_pages_does_not_paint_localnet_as_testnet() -> None:
     assert "./deploy.json" in APP_JS
     assert "./localnet.json" in APP_JS
     assert "./listen.json" in APP_JS
+    assert "./due.json" in APP_JS
+    assert "loadDueSnapshot" in APP_JS
+    assert "quickstartAppId" in APP_JS
     assert "setNetworkMeta" in APP_JS
     assert "ln.created_at" in APP_JS
     assert '" · proof "' in APP_JS or " · proof " in APP_JS
+    # Undeployed path must keep "not on TestNet" even when due.json has a TestNet round
+    assert "not on TestNet" in APP_JS
     html = (ROOT / "docs" / "index.html").read_text()
     assert 'id="network-meta"' in html
     assert "LocalNet proof only" in html
     assert "not on TestNet" in html
     assert "created_at" in html
     assert "2026-09-18" in html
+    assert "due.json" in html
 
 
 def test_readme_stamps_last_recreate_and_dockerd_block() -> None:
     assert "2026-09-18" in README
-    assert "2026-09-21" in README
+    assert "2026-09-22" in README
     assert "no dockerd" in README.lower() or "Container engine not found" in README
     assert "unsigned" in README.lower()
+    assert "probe_keeper.py" in README
+    assert "docs/due.json" in README or "`docs/due.json`" in README
     assert int(DEPLOY.get("appId") or 0) == 0
 
 
@@ -112,3 +120,38 @@ def test_mock_keeper_is_localnet_only_source() -> None:
     assert "Not for TestNet" in src
     assert "def run(self, app: Application)" in src
     assert 'arc4_signature("run()uint64")' in src
+
+
+def test_due_json_unsigned_keeper_probe() -> None:
+    """Unsigned TestNet keeper probe; never invents a quickstart app/upkeep."""
+    due_path = ROOT / "docs" / "due.json"
+    assert due_path.is_file()
+    due = json.loads(due_path.read_text())
+    assert due.get("network") == "testnet"
+    assert int(due.get("keeperAppId") or 0) == 769891898
+    assert int(due.get("quickstartAppId") or 0) == 0
+    assert int(due.get("quickstartUpkeepId") or 0) == 0
+    assert int(due.get("lastRound") or 0) > 0
+    assert int(due.get("nextUpkeepId") or 0) > 0
+    assert due.get("probedAt")
+    assert "unsigned" in str(due.get("source") or "").lower() or "algod" in str(due.get("source") or "").lower()
+    # LocalNet proof ids must not leak into due.json as a TestNet quickstart
+    assert int(due.get("quickstartAppId") or 0) != int(LOCALNET.get("appId") or 0)
+    skipped = {int(s.get("id")) for s in (due.get("skipped") or []) if isinstance(s, dict)}
+    assert 81 in skipped
+    assert 87 in skipped
+    assert int(DEPLOY.get("appId") or 0) == 0
+    assert str(LOCALNET.get("appId")) not in json.dumps(
+        {k: due[k] for k in due if k not in ("notes",)}
+    )
+
+
+def test_probe_keeper_never_writes_deploy_json() -> None:
+    src = (ROOT / "scripts" / "probe_keeper.py").read_text()
+    assert "Never writes docs/deploy.json" in src or "never writes docs/deploy.json" in src.lower()
+    assert "DEPLOY_JSON.write" not in src
+    assert "OUT.write_text" in src
+    assert "docs/due.json" in src
+    assert "769891898" in src
+    assert "81" in src and "87" in src
+    assert "BANK" in src
