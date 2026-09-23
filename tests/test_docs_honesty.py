@@ -77,16 +77,18 @@ def test_pages_does_not_paint_localnet_as_testnet() -> None:
     assert "not on TestNet" in html
     assert "created_at" in html
     assert "2026-09-18" in html
+    assert "2026-09-23" in html
     assert "due.json" in html
 
 
 def test_readme_stamps_last_recreate_and_dockerd_block() -> None:
     assert "2026-09-18" in README
-    assert "2026-09-22" in README
+    assert "2026-09-23" in README
     assert "no dockerd" in README.lower() or "Container engine not found" in README
     assert "unsigned" in README.lower()
     assert "probe_keeper.py" in README
     assert "docs/due.json" in README or "`docs/due.json`" in README
+    assert "67595286" in README  # lastRound from unsigned probe
     assert int(DEPLOY.get("appId") or 0) == 0
 
 
@@ -131,9 +133,10 @@ def test_due_json_unsigned_keeper_probe() -> None:
     assert int(due.get("keeperAppId") or 0) == 769891898
     assert int(due.get("quickstartAppId") or 0) == 0
     assert int(due.get("quickstartUpkeepId") or 0) == 0
-    assert int(due.get("lastRound") or 0) > 0
+    assert int(due.get("lastRound") or 0) >= 67595286  # refreshed 2026-09-23 probe
     assert int(due.get("nextUpkeepId") or 0) > 0
     assert due.get("probedAt")
+    assert str(due.get("probedAt") or "").startswith("2026-09-23")
     assert "unsigned" in str(due.get("source") or "").lower() or "algod" in str(due.get("source") or "").lower()
     # LocalNet proof ids must not leak into due.json as a TestNet quickstart
     assert int(due.get("quickstartAppId") or 0) != int(LOCALNET.get("appId") or 0)

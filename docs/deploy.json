@@ -5,5 +5,5 @@
   "keeperAppId": 769891898,
   "hook": "run()uint64",
   "executeTxid": "",
-  "notes": "not done \u2014 TestNet dispenser requires Google login; live create/register/execute not completed; do not invent txids. 2026-09-22 unsigned algod+indexer probe (scripts/probe_keeper.py \u2192 docs/due.json): keeper 769891898 still live on TestNet (frozen=0, next_upkeep_id=121, last-round\u224867558222); skipped upkeep 81/87; LocalNet recreate blocked (no dockerd); last LocalNet proof remains 2026-09-18 in docs/localnet.json + docs/listen.json \u2014 not TestNet. docs/due.json is keeper-only; quickstartAppId stays 0."
+  "notes": "not done \u2014 TestNet dispenser requires Google login; live create/register/execute not completed; do not invent txids. 2026-09-23 unsigned algod+indexer probe (scripts/probe_keeper.py \u2192 docs/due.json): keeper 769891898 still live on TestNet (frozen=0, next_upkeep_id=121, last-round\u224867595286); skipped upkeep 81/87; LocalNet recreate blocked (no dockerd); last LocalNet proof remains 2026-09-18 in docs/localnet.json + docs/listen.json \u2014 not TestNet. docs/due.json is keeper-only; quickstartAppId stays 0."
 }
