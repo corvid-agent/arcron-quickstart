@@ -5,13 +5,13 @@
   "indexer": "https://testnet-idx.algonode.cloud",
   "keeperAppId": 769891898,
   "keeperAddress": "M4YFP33L5VIFRF53X53WUMQWBOWSLYQNBSSAJV2SORGF43L36XBY7OREUA",
-  "keeperBalanceMicroAlgos": 17226312,
+  "keeperBalanceMicroAlgos": 15526119,
   "keeperMinBalance": 2745200,
   "frozen": 0,
   "nextUpkeepId": 121,
   "createdAtRound": 66668923,
   "creator": "E5M2OH5XNDMNABJ6VOFOUVR2IKRPCGQH43PVC5P3DWQQ2LV2VJV2FJZQ3E",
-  "lastRound": 67595286,
+  "lastRound": 67627082,
   "quickstartAppId": 0,
   "quickstartUpkeepId": 0,
   "skipped": [
@@ -24,7 +24,7 @@
       "reason": "do not poke"
     }
   ],
-  "probedAt": "2026-09-23T20:02:01.727Z",
+  "probedAt": "2026-09-24T19:50:45.195Z",
   "source": "unsigned TestNet algod+indexer read",
-  "notes": "Quickstart still undeployed on TestNet (docs/deploy.json appId 0). Keeper 769891898 live on TestNet (frozen=0, next_upkeep_id=121, last-round=67595286). LocalNet proof stays in localnet.json + listen.json only (app 1150) \u2014 never copy those ids into deploy.json. Did not spend TestNet bank. Skipped upkeep 81. Did not poke 87. dockerd/LocalNet was down this pass so no recreate."
+  "notes": "Quickstart still undeployed on TestNet (docs/deploy.json appId 0). Keeper 769891898 live on TestNet (frozen=0, next_upkeep_id=121, last-round=67627082). LocalNet proof stays in localnet.json + listen.json only (app 1150) \u2014 never copy those ids into deploy.json. Did not spend TestNet bank. Skipped upkeep 81. Did not poke 87. dockerd/LocalNet was down this pass so no recreate."
 }
