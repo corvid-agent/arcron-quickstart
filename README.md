@@ -60,9 +60,9 @@ LocalNet proof for Pages lives in `docs/localnet.json` and `docs/listen.json` (C
 | Global after listen | `work_done=1`, `pending=0`, `last_run_round=124` | LocalNet snapshot |
 | TestNet Pages `appId` | still `0` | unchanged |
 | Proof `created_at` | `2026-09-18T16:11:16Z` | LocalNet snapshot; CRT shows the date |
-| Last CoS recreate attempt | 2026-09-24 — **blocked** (no dockerd / Container engine not found) | unsigned TestNet keeper probe → `docs/due.json` |
+| Last CoS recreate attempt | 2026-09-25 — **blocked** (no dockerd / Container engine not found) | unsigned TestNet keeper probe → `docs/due.json` |
 
-As of **2026-09-24** (America/Denver): LocalNet recreate+listen was not re-run because Docker/Podman is not on PATH on the CoS box (`algokit localnet status` → Container engine not found). The table above is the last successful LocalNet proof (2026-09-18). Do not treat it as fresh today. Unsigned TestNet probe (`python scripts/probe_keeper.py`) refreshed `docs/due.json`: keeper `769891898` still live (`frozen=0`, `next_upkeep_id=121`, TestNet last-round `67627082`, probedAt `2026-09-24T19:50:45.195Z`). Skipped upkeep 81 and 87. TestNet bank not spent. `docs/deploy.json` stays `appId: 0`. `due.json` `quickstartAppId`/`quickstartUpkeepId` stay 0 — never paint the keeper probe as a quickstart deploy. Prior CoS probes on 2026-09-22 and 2026-09-23 also blocked on dockerd.
+As of **2026-09-25** (America/Denver): LocalNet recreate+listen was not re-run because Docker/Podman is not on PATH on the CoS box (`algokit localnet status` → Container engine not found). The table above is the last successful LocalNet proof (2026-09-18). Do not treat it as fresh today. Unsigned TestNet probe (`python scripts/probe_keeper.py`) refreshed `docs/due.json`: keeper `769891898` still live (`frozen=0`, `next_upkeep_id=121`, TestNet last-round `67653977`, probedAt `2026-09-25T15:58:12.488Z`). Skipped upkeep 81 and 87. TestNet bank not spent. `docs/deploy.json` stays `appId: 0`. `due.json` `quickstartAppId`/`quickstartUpkeepId` stay 0 — never paint the keeper probe as a quickstart deploy. Prior CoS probes on 2026-09-22 through 2026-09-24 also blocked on dockerd.
 
 ```bash
 # Docker daemon required
